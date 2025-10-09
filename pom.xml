@@ -18,6 +18,7 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- orm подтягивает тоже подтягивает дохуя залупы пересекается с тем что webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
