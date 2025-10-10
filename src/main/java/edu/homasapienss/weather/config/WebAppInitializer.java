@@ -6,12 +6,12 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     //Инициализация  основного контекста приложения @Service @Repository
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[] { AppConfig.class };
+        return new Class[] { WebMvcConfig.class };
     }
     //Инициализация Web-контекста для @Controller viewResolver
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { WebMvcConfig.class };
+        return new Class[] { AppConfig.class };
     }
 
     @Override
