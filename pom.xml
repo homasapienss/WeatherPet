@@ -32,12 +32,17 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.1.0</version> <!-- или актуальная -->
+            <version>5.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.29.2</version>
         </dependency>
         <!-- Thymeleaf для рендеринга HTML -->
         <dependency>
@@ -82,7 +87,7 @@
     <build>
         <finalName>WeatherPet</finalName>
         <plugins>
-            <!-- Компиляция -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
