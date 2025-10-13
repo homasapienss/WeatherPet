@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 5
+      author: homasapienss
+      rollback:
+        - renameColumn:
+            tableName: users
+            oldColumnName: username
+            newColumnName: login
+            columnDataType: varchar
