@@ -33,6 +33,14 @@ public class UserRepository implements CrudRepository<User, Long> {
                 .get(User.class, aLong));
     }
 
+    public Optional<User> getByLogin(String login) {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery("FROM User WHERE login=:login", User.class)
+                .setParameter("login", login)
+                .uniqueResultOptional();
+    }
+
     @Override
     public User saveOrUpdate(User entityToSave) {
         return sessionFactory
