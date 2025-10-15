@@ -18,7 +18,9 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 @ComponentScan(basePackages = {
         "edu.homasapienss.weather.repositories",
-        "edu.homasapienss.weather.services"})
+        "edu.homasapienss.weather.services",
+        "edu.homasapienss.weather.mappers",
+        "edu.homasapienss.weather.interceptors"})
 public class AppConfig {
     @Value("${db.driver}")
     private String driver;
@@ -71,7 +73,7 @@ public class AppConfig {
         factory.setPackagesToScan("edu.homasapienss.weather.models");
 
         Properties props = new Properties();
-        props.setProperty("hibernate.dialect", dialect);
+        //props.setProperty("hibernate.dialect", dialect);
         props.setProperty("hibernate.hbm2ddl.auto", ddlAuto);
         props.setProperty("hibernate.show_sql", showSql);
 
