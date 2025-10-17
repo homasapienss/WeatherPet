@@ -1,6 +1,6 @@
 package edu.homasapienss.weather.config;
 
-import edu.homasapienss.weather.interceptors.AuthInterceptor;
+import edu.homasapienss.weather.interceptors.AuthorizeInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
@@ -18,18 +19,24 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @ComponentScan(basePackages = "edu.homasapienss.weather.controllers")
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    private final AuthInterceptor authInterceptor;
+    private final AuthorizeInterceptor authorizeInterceptor;
 
     @Autowired
-    public WebMvcConfig(AuthInterceptor authInterceptor) {
-        this.authInterceptor = authInterceptor;
+    public WebMvcConfig(AuthorizeInterceptor authorizeInterceptor) {
+        this.authorizeInterceptor = authorizeInterceptor;
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("/css/**")
+                .addResourceLocations("/css/");
     }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/sign-in", "/sign-up");
+        registry.addInterceptor(authorizeInterceptor)
+                .addPathPatterns("/**");
     }
 
     @Bean

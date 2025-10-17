@@ -2,13 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
-    <link rel="stylesheet" href="/css/auth.css">
+    <link th:href="@{/css/auth.css}" rel="stylesheet">
 </head>
 <body>
 <div class="auth-container">
     <h2>Создать аккаунт</h2>
 
-    <form th:action="@{/sign-up}" method="post">
+    <form th:action="@{/auth/sign-up}" method="post">
         <div class="form-group">
             <label for="login">Имя пользователя:</label>
             <input id="login" name="login" type="text" required>
@@ -23,7 +23,7 @@
     </form>
 
     <p>Уже есть аккаунт?
-        <a th:href="@{/sign-in}">Войти</a>
+        <a th:href="@{/auth/sign-in}">Войти</a>
     </p>
     <p>
         <a th:href="@{/}">В хату</a>
