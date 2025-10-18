@@ -3,14 +3,23 @@ package edu.homasapienss.weather.services;
 import edu.homasapienss.weather.models.Session;
 import edu.homasapienss.weather.models.User;
 import edu.homasapienss.weather.repositories.SessionRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.UUID;
 
+@PropertySource("classpath:application.properties")
 @Service
 public class SessionService {
+    @Value("${session.extend.time.minutes}")
+    private long extendTimeSessionMinutes;
     private final SessionRepository sessionRepository;
 
     @Autowired
@@ -18,19 +27,70 @@ public class SessionService {
         this.sessionRepository = sessionRepository;
     }
 
-    public boolean isSessionValid() {
-        return true;
+    @Transactional
+    public boolean isSessionValid(HttpServletRequest req) {
+        Session session = takeSessionFromRequest(req);
+
+        if (session == null) return false;
+        if (isSessionExpired(session)) {
+            deleteSession(session);
+            return false;
+        } else {
+            extendSession(session);
+            return true;
+        }
+    }
+
+    public Session takeSessionFromRequest(HttpServletRequest req) {
+        Cookie[] cookies = req.getCookies();
+
+        if (cookies == null) {
+            return null;
+        }
+
+        UUID uuidOfSession = Arrays.stream(cookies)
+                .filter(c -> "SESSION_UUID".equals(c.getName()))
+                .map(c -> {
+                    try {
+                        return UUID.fromString(c.getValue());
+                    } catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                })
+                .filter(u -> u != null)
+                .findFirst()
+                .orElse(null);
+
+        if (uuidOfSession == null) return null;
+        return getSession(uuidOfSession);
+    }
+
+    public Session getSession(UUID uuid) {
+        return sessionRepository.getById(uuid).orElse(null);
+    }
+
+    public void deleteSession(Session session) {
+        sessionRepository.delete(session);
     }
 
     public UUID createSession(User user) {
         Session session = new Session();
         session.setUser(user);
-        session.setExpiresAt(LocalDateTime.now().plusMinutes(5));
+        session.setExpiresAt(renewExpiresAt(extendTimeSessionMinutes));
         return sessionRepository.saveOrUpdate(session).getId();
     }
 
-    public boolean isSessionExpired(UUID sessionUUID) {
-        Session session = sessionRepository.getById(sessionUUID).orElseThrow(() -> new RuntimeException("Сессия не найдена"));
-        return !session.getExpiresAt().isBefore(LocalDateTime.now());
+    public boolean isSessionExpired(Session session) {
+        return session.getExpiresAt().isBefore(LocalDateTime.now());
+    }
+
+
+    public void extendSession(Session session) {
+        session.setExpiresAt(renewExpiresAt(extendTimeSessionMinutes));
+        sessionRepository.saveOrUpdate(session);
+    }
+
+    private LocalDateTime renewExpiresAt(Long extendTimeSessionMinutes) {
+        return LocalDateTime.now().plusMinutes(extendTimeSessionMinutes);
     }
 }
