@@ -18,7 +18,7 @@ public class AuthorizeInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (sessionService.isSessionValid(request)) {
+        if (sessionService.isSessionValid(request, response)) {
             return true;
         } else {
             response.sendRedirect("/auth/sign-in");

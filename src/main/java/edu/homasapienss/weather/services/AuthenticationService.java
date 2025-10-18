@@ -25,7 +25,7 @@ public class AuthenticationService {
     }
 
     @Transactional
-    public UserDto registrationUser(UserDto userDto) {
+    public void registrationUser(UserDto userDto) {
         Optional<User> existingUser = userRepository.getByLogin(userDto.login());
         if (existingUser.isPresent()) {
             throw new IllegalStateException("Пользователь с таким именем уже существует");
@@ -35,7 +35,6 @@ public class AuthenticationService {
         }
         User userToSave = userMapper.toUser(userDto);
         userToSave.setPassword(passwordEncoder.encode(userDto.password()));
-        User savedUser = userRepository.saveOrUpdate(userToSave);
-        return userMapper.toUserDto(savedUser);
+        userRepository.saveOrUpdate(userToSave);
     }
 }

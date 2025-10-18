@@ -8,7 +8,7 @@
 <div class="auth-container">
     <h2>Вход в аккаунт</h2>
 
-    <form th:action="@{/auth/sign-in}" method="post">
+    <form th:action="@{/auth/login}" method="post">
         <div class="form-group">
             <label for="login">Login:</label>
             <input id="login" name="login" type="text" required>
@@ -23,7 +23,7 @@
     </form>
 
     <p>Нет аккаунта?
-        <a th:href="@{/auth/sign-up}">Зарегистрироваться</a>
+        <a th:href="@{/auth/register}">Зарегистрироваться</a>
     </p>
 </div>
 </body>

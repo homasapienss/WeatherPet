@@ -5,9 +5,12 @@ import edu.homasapienss.weather.models.User;
 import edu.homasapienss.weather.repositories.SessionRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +31,13 @@ public class SessionService {
     }
 
     @Transactional
-    public boolean isSessionValid(HttpServletRequest req) {
+    public boolean isSessionValid(HttpServletRequest req, HttpServletResponse resp) {
         Session session = takeSessionFromRequest(req);
 
         if (session == null) return false;
         if (isSessionExpired(session)) {
             deleteSession(session);
+            deleteCookie(resp);
             return false;
         } else {
             extendSession(session);
@@ -92,5 +96,17 @@ public class SessionService {
 
     private LocalDateTime renewExpiresAt(Long extendTimeSessionMinutes) {
         return LocalDateTime.now().plusMinutes(extendTimeSessionMinutes);
+    }
+
+    private void deleteCookie(HttpServletResponse resp) {
+        ResponseCookie expired = ResponseCookie.from("SESSION_UUID", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
+
+        resp.addHeader(HttpHeaders.SET_COOKIE, expired.toString());
     }
 }
