@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.Duration;
-import java.util.UUID;
 
 @Service
 public class AuthorizeService {
@@ -51,11 +50,7 @@ public class AuthorizeService {
         Session session = sessionService.takeSessionFromRequest(req);
         if (session!=null) {
             sessionService.deleteSession(session);
-            ResponseCookie expiredCookie = ResponseCookie.from("SESSION_UUID", "")
-                    .path("/")
-                    .maxAge(0)
-                    .build();
-            resp.addHeader(HttpHeaders.SET_COOKIE, expiredCookie.toString());
+            sessionService.deleteCookie(resp);
         }
     }
 

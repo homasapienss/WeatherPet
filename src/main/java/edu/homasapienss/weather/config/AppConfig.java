@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestClient;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -93,5 +94,19 @@ public class AppConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public RestClient geoRestClient() {
+        return RestClient.builder()
+                .baseUrl("https://api.openweathermap.org/geo/1.0")
+                .build();
+    }
+
+    @Bean
+    public RestClient weatherRestClient() {
+        return RestClient.builder()
+                .baseUrl("https://api.openweathermap.org/data/2.5")
+                .build();
     }
 }
