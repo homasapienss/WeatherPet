@@ -19,7 +19,7 @@ public class Session {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "expires_at", nullable = false)
