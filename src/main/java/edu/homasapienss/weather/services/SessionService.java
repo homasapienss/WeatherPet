@@ -98,7 +98,7 @@ public class SessionService {
         return LocalDateTime.now().plusMinutes(extendTimeSessionMinutes);
     }
 
-    private void deleteCookie(HttpServletResponse resp) {
+    public void deleteCookie(HttpServletResponse resp) {
         ResponseCookie expired = ResponseCookie.from("SESSION_UUID", "")
                 .httpOnly(true)
                 .secure(false)
