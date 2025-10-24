@@ -26,14 +26,14 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-lg-4 col-md-6 col-sm-12">
-            <form th:action="@{/register}" method="post" class="mt-4">
+            <form th:action="@{/auth/register}" method="post" class="mt-4">
                 <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
+                    <label for="login" class="form-label">Username</label>
                     <input type="text"
                            class="form-control"
                            th:classappend="${usernameError} ? ' is-invalid' : ''"
-                           id="username"
-                           name="username"
+                           id="login"
+                           name="login"
                            th:value="${username}"
                            required />
                         <div class="invalid-feedback">
@@ -54,13 +54,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="repeat-password" class="form-label">Repeat password</label>
-                    <input type="password" class="form-control" id="repeat-password" name="repeatPassword" required />
-                </div>
-
-                <input type="hidden" name="redirect_to" value="http://localhost/"/>
 
                 <button type="submit" class="btn btn-primary w-100 mt-3">Sign Up</button>
                 <p class="mt-2 text-center">Already have an account? <a th:href="@{/auth/login}">Sign in here</a></p>
