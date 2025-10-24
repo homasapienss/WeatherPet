@@ -21,7 +21,7 @@ public class AuthorizeInterceptor implements HandlerInterceptor {
         if (sessionService.isSessionValid(request, response)) {
             return true;
         } else {
-            response.sendRedirect("/auth/sign-in");
+            response.sendRedirect(request.getContextPath() + "/auth/login");
             return false;
         }
     }
