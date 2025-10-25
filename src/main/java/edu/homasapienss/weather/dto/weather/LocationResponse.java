@@ -8,7 +8,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class LocationDTO {
+public class LocationResponse {
     @JsonProperty("name")
     private String name;
     @JsonProperty("lat")

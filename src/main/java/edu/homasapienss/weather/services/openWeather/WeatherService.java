@@ -1,6 +1,6 @@
 package edu.homasapienss.weather.services.openWeather;
 
-import edu.homasapienss.weather.dto.weather.WeatherDTO;
+import edu.homasapienss.weather.dto.weather.WeatherResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -19,8 +19,8 @@ public class WeatherService {
         this.weatherRestClient = weatherRestClient;
     }
 
-    public WeatherDTO getWeatherResponse(Double latitude,
-                                         Double longitude) {
+    public WeatherResponse getWeatherResponse(Double latitude,
+                                              Double longitude) {
         return weatherRestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/weather")
@@ -29,7 +29,7 @@ public class WeatherService {
                         .queryParam("appid", apiKey)
                         .build())
                 .retrieve()
-                .body(WeatherDTO.class);
+                .body(WeatherResponse.class);
 
     }
 }

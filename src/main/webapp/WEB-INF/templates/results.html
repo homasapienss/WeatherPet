@@ -15,7 +15,7 @@
             Weather Tracker
         </a>
         <div class="d-flex align-items-center">
-            <span class="navbar-text me-3" th:text="${login}">homasapienss</span>
+            <span class="navbar-text me-3" th:text="${user.login}">homasapienss</span>
             <form th:action="@{/auth/logout}" method="post">
                 <button type="submit" class="btn btn-outline-danger">Sign out</button>
             </form>
@@ -50,9 +50,11 @@
                             <p class="card-text mb-1">Country: <span th:text="${loc.country}">US</span></p>
                             <p class="card-text mb-3">State: <span th:text="${loc.state}">California</span></p>
                             <div class="mt-auto">
-                                <form th:action="@{/}" method="get">
+                                <form th:action="@{/add-location}" method="post">
                                     <input type="hidden" name="lat" th:value="${loc.lat}">
                                     <input type="hidden" name="lon" th:value="${loc.lon}">
+                                    <input type="hidden" name="cityName" th:value="${loc.name}">
+                                    <input type="hidden" name="user" th:value="${user}">
                                     <button class="btn btn-primary w-100" type="submit">Add</button>
                                 </form>
                             </div>

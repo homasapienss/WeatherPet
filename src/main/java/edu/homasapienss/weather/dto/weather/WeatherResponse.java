@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @Getter @Setter
-public class WeatherDTO {
+public class WeatherResponse {
 
     @JsonProperty("main")
     private MainDTO main;

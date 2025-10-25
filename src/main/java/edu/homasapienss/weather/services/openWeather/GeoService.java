@@ -1,7 +1,6 @@
 package edu.homasapienss.weather.services.openWeather;
 
-import edu.homasapienss.weather.dto.weather.LocationDTO;
-import edu.homasapienss.weather.dto.weather.WeatherDTO;
+import edu.homasapienss.weather.dto.weather.LocationResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -26,7 +25,7 @@ public class GeoService {
         this.geoRestClient = geoRestClient;
     }
 
-    public List<LocationDTO> getGeoResponse(String cityName) {
+    public List<LocationResponse> getGeoResponse(String cityName) {
         return geoRestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/direct")
@@ -35,6 +34,6 @@ public class GeoService {
                         .queryParam("appid", apiKey)
                         .build())
                 .retrieve()
-                .body(new ParameterizedTypeReference<List<LocationDTO>>() {});
+                .body(new ParameterizedTypeReference<List<LocationResponse>>() {});
     }
 }
