@@ -19,4 +19,9 @@ public class UserService {
     public User getUser(Long id) {
         return userRepository.getById(id).orElse(null);
     }
+
+    @Transactional
+    public User getUserByLogin(String login) {
+        return userRepository.getByLogin(login).orElse(null);
+    }
 }

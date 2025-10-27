@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1761566785791-1
+      author: ??????
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - modifyDataType:
+            columnName: latitude
+            newDataType: DECIMAL(10, 7)
+            tableName: locations
+  - changeSet:
+      id: 1761566785791-2
+      author: ??????
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - modifyDataType:
+            columnName: longitude
+            newDataType: DECIMAL(10, 7)
+            tableName: locations
+

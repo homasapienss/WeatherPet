@@ -2,6 +2,7 @@ package edu.homasapienss.weather.controllers;
 
 import edu.homasapienss.weather.dto.LocationDTO;
 import edu.homasapienss.weather.dto.weather.LocationResponse;
+import edu.homasapienss.weather.models.User;
 import edu.homasapienss.weather.services.LocationService;
 import edu.homasapienss.weather.services.openWeather.GeoService;
 import edu.homasapienss.weather.services.openWeather.WeatherService;
@@ -27,25 +28,27 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String welcome(HttpServletRequest req, Model model) {
-        model.addAttribute("user", req.getAttribute("user"));
+    public String welcome(Model model,
+                          @RequestAttribute("user") User user) {
+        model.addAttribute("user", user);
         return "index";
     }
 
     @GetMapping("/search-results")
-    public String results(HttpServletRequest req,
+    public String showLocations(@RequestAttribute("user") User user,
                           @RequestParam("city") String city,
                           Model model) {
-        model.addAttribute("user", req.getAttribute("user"));
+        model.addAttribute("user", user);
         List<LocationResponse> geoResponse = geoService.getGeoResponse(city);
         model.addAttribute("locations", geoResponse);
-        model.addAttribute("city", city);
         return "results";
     }
 
     @PostMapping("/add-location")
-    public void addLocation (@ModelAttribute LocationDTO locationDTO) {
-        locationService.addLocation(locationDTO);
+    public String addLocation (@ModelAttribute LocationDTO locationDTO,
+                             @RequestParam("login") String login) {
+        locationService.addLocation(locationDTO, login);
+        return "redirect:/";
     }
 
 //    @GetMapping("/weather")
