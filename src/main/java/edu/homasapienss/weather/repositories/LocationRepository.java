@@ -46,4 +46,20 @@ public class LocationRepository implements CrudRepository<Location, Long> {
                 .getCurrentSession()
                 .remove(entityToDelete);
     }
+
+    public void deleteById(Long id) {
+        sessionFactory
+                .getCurrentSession()
+                .createQuery("DELETE FROM Location WHERE id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    public List<Location> getLocationsByUser(Long userId) {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery("FROM Location WHERE user.id = :userId", Location.class)
+                .setParameter("userId", userId)
+                .list();
+    }
 }

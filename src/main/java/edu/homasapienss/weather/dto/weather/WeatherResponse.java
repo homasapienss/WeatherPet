@@ -5,15 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @NoArgsConstructor
 @Getter @Setter
 public class WeatherResponse {
 
     @JsonProperty("main")
     private MainDTO main;
-
-    @JsonProperty("name")
-    private String name;
+    @JsonProperty("sys")
+    private Sys sys;
+    @JsonProperty("weather")
+    private List<Condition> conditions;
 
     @NoArgsConstructor
     @Getter @Setter
@@ -22,8 +25,25 @@ public class WeatherResponse {
         @JsonProperty("temp")
         private Double temp;
 
-        @JsonProperty("pressure")
-        private Integer pressure;
+        @JsonProperty("humidity")
+        private Integer humidity;
+
+        @JsonProperty("feels_like")
+        private Double feels_like;
+    }
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class Sys {
+        @JsonProperty("country")
+        private String country;
+    }
+
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class Condition {
+        private String description;
     }
 }
 

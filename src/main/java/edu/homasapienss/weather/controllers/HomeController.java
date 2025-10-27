@@ -4,9 +4,8 @@ import edu.homasapienss.weather.dto.LocationDTO;
 import edu.homasapienss.weather.dto.weather.LocationResponse;
 import edu.homasapienss.weather.models.User;
 import edu.homasapienss.weather.services.LocationService;
+import edu.homasapienss.weather.services.WeatherInformationService;
 import edu.homasapienss.weather.services.openWeather.GeoService;
-import edu.homasapienss.weather.services.openWeather.WeatherService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +15,13 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    private final WeatherService weatherService;
+    private final WeatherInformationService weatherInformationService;
     private final GeoService geoService;
     private final LocationService locationService;
 
 
-    public HomeController(WeatherService weatherService, GeoService geoService, LocationService locationService) {
-        this.weatherService = weatherService;
+    public HomeController(WeatherInformationService weatherInformationService, GeoService geoService, LocationService locationService) {
+        this.weatherInformationService = weatherInformationService;
         this.geoService = geoService;
         this.locationService = locationService;
     }
@@ -31,22 +30,32 @@ public class HomeController {
     public String welcome(Model model,
                           @RequestAttribute("user") User user) {
         model.addAttribute("user", user);
+        model.addAttribute("locationsWithWeather", weatherInformationService.getWeatherInformation(user.getId()));
         return "index";
     }
 
     @GetMapping("/search-results")
-    public String showLocations(@RequestAttribute("user") User user,
-                          @RequestParam("city") String city,
-                          Model model) {
+    public String showLocationsByCity(@RequestAttribute("user") User user,
+                                      @RequestParam("city") String city,
+                                      Model model) {
         model.addAttribute("user", user);
         List<LocationResponse> geoResponse = geoService.getGeoResponse(city);
         model.addAttribute("locations", geoResponse);
         return "results";
     }
 
+    @PostMapping("/delete-location")
+    public String deleteLocation(@RequestAttribute("user") User user,
+                                 @RequestParam("id") Long id,
+                                 Model model) {
+        model.addAttribute("user", user);
+        locationService.deleteLocationById(id);
+        return "redirect:/";
+    }
+
     @PostMapping("/add-location")
-    public String addLocation (@ModelAttribute LocationDTO locationDTO,
-                             @RequestParam("login") String login) {
+    public String addLocation(@ModelAttribute LocationDTO locationDTO,
+                              @RequestParam("login") String login) {
         locationService.addLocation(locationDTO, login);
         return "redirect:/";
     }

@@ -7,6 +7,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.math.BigDecimal;
+
 @Service
 @PropertySource("classpath:application.properties")
 public class WeatherService {
@@ -19,8 +21,8 @@ public class WeatherService {
         this.weatherRestClient = weatherRestClient;
     }
 
-    public WeatherResponse getWeatherResponse(Double latitude,
-                                              Double longitude) {
+    public WeatherResponse getWeatherResponse(BigDecimal latitude,
+                                              BigDecimal longitude) {
         return weatherRestClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/weather")

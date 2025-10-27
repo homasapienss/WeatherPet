@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class LocationService {
     private final LocationRepository locationRepository;
@@ -28,5 +30,15 @@ public class LocationService {
         Location location = locationMapper.toLocation(locationDTO);
         location.setUser(userByLogin);
         locationRepository.saveOrUpdate(location);
+    }
+
+    @Transactional
+    public List<Location> getLocationsByUserId(Long userId) {
+        return locationRepository.getLocationsByUser(userId);
+    }
+
+    @Transactional
+    public void deleteLocationById(Long locId) {
+        locationRepository.deleteById(locId);
     }
 }
