@@ -2,8 +2,8 @@ package edu.homasapienss.weather.exceptions.auth;
 
 import edu.homasapienss.weather.exceptions.ApplicationException;
 
-public class RegistrationException extends ApplicationException {
-    public RegistrationException(String message) {
+public class RegisterException extends ApplicationException {
+    public RegisterException(String message) {
         super(message);
     }
 }

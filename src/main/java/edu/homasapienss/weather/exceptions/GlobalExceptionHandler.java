@@ -2,7 +2,7 @@ package edu.homasapienss.weather.exceptions;
 
 import edu.homasapienss.weather.exceptions.auth.LoginException;
 import edu.homasapienss.weather.exceptions.auth.login.BadCredentialsException;
-import edu.homasapienss.weather.exceptions.auth.RegistrationException;
+import edu.homasapienss.weather.exceptions.auth.RegisterException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -15,8 +15,8 @@ public class GlobalExceptionHandler {
         return "login-error";
     }
 
-    @ExceptionHandler(RegistrationException.class)
-    public String handleRegistrationError(RegistrationException ex, Model model) {
+    @ExceptionHandler(RegisterException.class)
+    public String handleRegisterError(RegisterException ex, Model model) {
         model.addAttribute("error_message", ex.getCustomExceptionMessage());
         return "register-error";
     }
