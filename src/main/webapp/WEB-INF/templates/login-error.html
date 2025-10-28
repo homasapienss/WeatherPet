@@ -18,6 +18,14 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-lg-4 col-md-6 col-sm-12">
+            <div class="alert alert-danger" role="alert">
+                Invalid username or password.
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-4 col-md-6 col-sm-12">
             <form th:action="@{/auth/login}" method="post" class="mt-4">
                 <div class="mb-3">
                     <label for="login" class="form-label">Username</label>
@@ -34,7 +42,7 @@
                     <input type="password" class="form-control" id="password" name="password" required value=""/>
                 </div>
 
-<!--                <input type="hidden" name="redirect_to" value="http://localhost/"/>-->
+                <!--                <input type="hidden" name="redirect_to" value="http://localhost/"/>-->
 
                 <button type="submit" class="btn btn-primary w-100 mt-3">Sign In</button>
                 <p class="mt-2 text-center">Don't have an account? <a th:href="@{/auth/register}">Sign up here</a></p>
