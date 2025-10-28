@@ -10,8 +10,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface WeatherMapper {
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "name", ignore = true)
+    @Mapping(target = "locationId", ignore = true)
+    @Mapping(target = "locationName", ignore = true)
     @Mapping(target = "humidity", source = "main.humidity")
     @Mapping(target = "country", source = "sys.country")
     @Mapping(target = "description", source = "conditions", qualifiedByName = "extractDescription")

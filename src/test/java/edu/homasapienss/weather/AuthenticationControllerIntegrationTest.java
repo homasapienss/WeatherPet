@@ -46,6 +46,7 @@ public class AuthenticationControllerIntegrationTest {
                         .param("password", "qwerty"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
+
         Optional<User> created = userRepository.getByLogin("ivan123");
         Assertions.assertTrue(created.isPresent());
         Assertions.assertNotEquals("qwerty", created.get().getPassword());

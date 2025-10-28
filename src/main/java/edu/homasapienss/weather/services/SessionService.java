@@ -41,7 +41,7 @@ public class SessionService {
             return false;
         } else {
             extendSession(session);
-            req.setAttribute("user_id", session.getUser().getId());
+            req.setAttribute("user", session.getUser());
             return true;
         }
     }

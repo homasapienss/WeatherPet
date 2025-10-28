@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WeatherDTO {
-    private Long id;
-    private String name;
+    private Long locationId;
+    private String locationName;
     private String country;
     private Double temp;
     private Integer humidity;
