@@ -19,7 +19,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-lg-4 col-md-6 col-sm-12">
             <div class="alert alert-danger" role="alert">
-                Invalid username or password.
+                <span th:text="${error_message}">Ошибка</span>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                     <label for="login" class="form-label">Username</label>
 
                     <div class="input-group has-validation">
-                        <input type="text" class="form-control is-invalid" id="login" name="login" required value=""/>
+                        <input type="text" class="form-control" id="login" name="login" required value=""/>
                         <div class="invalid-feedback">
                             Invalid email.
                         </div>
@@ -41,9 +41,6 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required value=""/>
                 </div>
-
-                <!--                <input type="hidden" name="redirect_to" value="http://localhost/"/>-->
-
                 <button type="submit" class="btn btn-primary w-100 mt-3">Sign In</button>
                 <p class="mt-2 text-center">Don't have an account? <a th:href="@{/auth/register}">Sign up here</a></p>
             </form>

@@ -16,7 +16,9 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "edu.homasapienss.weather.controllers")
+@ComponentScan(basePackages = {
+        "edu.homasapienss.weather.controllers",
+        "edu.homasapienss.weather.exceptions"})
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final AuthorizeInterceptor authorizeInterceptor;

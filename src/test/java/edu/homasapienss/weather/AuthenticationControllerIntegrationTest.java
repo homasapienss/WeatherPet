@@ -45,7 +45,7 @@ public class AuthenticationControllerIntegrationTest {
                         .param("login", "ivan123")
                         .param("password", "qwerty"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(redirectedUrl("/auth/login"));
 
         Optional<User> created = userRepository.getByLogin("ivan123");
         Assertions.assertTrue(created.isPresent());
@@ -61,11 +61,11 @@ public class AuthenticationControllerIntegrationTest {
                         .param("login", "alex")
                         .param("password", "12345"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/"));
+                .andExpect(redirectedUrl("/auth/login"));
 
         mockMvc.perform(post("/auth/register")
                         .param("login", "alex")
                         .param("password", "12345"))
-                .andExpect(status().is4xxClientError());
+                .andExpect(status().is2xxSuccessful());
     }
 }

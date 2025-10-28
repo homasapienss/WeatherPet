@@ -1,6 +1,8 @@
 package edu.homasapienss.weather.services;
 
 import edu.homasapienss.weather.dto.UserDto;
+import edu.homasapienss.weather.exceptions.auth.register.LoginExistsException;
+import edu.homasapienss.weather.exceptions.auth.register.PasswordReplicateLoginException;
 import edu.homasapienss.weather.mappers.UserMapper;
 import edu.homasapienss.weather.models.User;
 import edu.homasapienss.weather.repositories.UserRepository;
@@ -28,10 +30,10 @@ public class AuthenticationService {
     public void registrationUser(UserDto userDto) {
         Optional<User> existingUser = userRepository.getByLogin(userDto.login());
         if (existingUser.isPresent()) {
-            throw new IllegalStateException("Пользователь с таким именем уже существует");
+            throw new LoginExistsException();
         }
         if (userDto.login().equals(userDto.password())) {
-            throw new IllegalArgumentException("Пароль не должен совпадать с логином");
+            throw new PasswordReplicateLoginException();
         }
         User userToSave = userMapper.toUser(userDto);
         userToSave.setPassword(passwordEncoder.encode(userDto.password()));

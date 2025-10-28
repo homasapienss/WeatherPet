@@ -48,7 +48,6 @@ public class TestConfig {
 
         Properties props = new Properties();
         props.put("hibernate.hbm2ddl.auto", "validate");
-        props.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         props.put("hibernate.show_sql", "true");
         factory.setHibernateProperties(props);
 

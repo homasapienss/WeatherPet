@@ -45,14 +45,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String signUp(@ModelAttribute UserDto userDto, HttpServletResponse resp) {
-        try {
-            authService.registrationUser(userDto);
-        } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return "register";
-        }
-        return "redirect:/";
+    public String signUp(@ModelAttribute UserDto userDto) {
+        authService.registrationUser(userDto);
+        return "redirect:/auth/login";
     }
 
     @PostMapping("/logout")

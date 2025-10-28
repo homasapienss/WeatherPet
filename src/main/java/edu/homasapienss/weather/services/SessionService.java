@@ -14,6 +14,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
@@ -109,5 +110,17 @@ public class SessionService {
                 .build();
 
         resp.addHeader(HttpHeaders.SET_COOKIE, expired.toString());
+    }
+
+    @Transactional
+    public void addCookie(HttpServletResponse resp, UUID uuidOfCreatedSession)  {
+        ResponseCookie cookie = ResponseCookie.from("SESSION_UUID", uuidOfCreatedSession.toString())
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(Duration.ofDays(30))
+                .sameSite("Strict")
+                .build();
+        resp.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 }
