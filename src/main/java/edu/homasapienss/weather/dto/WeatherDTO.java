@@ -15,4 +15,5 @@ public class WeatherDTO {
     private Integer humidity;
     private Double feels_like;
     private String description;
+    private String icon;
 }

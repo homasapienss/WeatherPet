@@ -48,7 +48,7 @@
                             </form>
                         </div>
                         <img class="card-img-top img-fluid"
-                             src="https://openweathermap.org/img/wn/01n@4x.png"
+                             th:src="@{'https://openweathermap.org/img/wn/' + ${loc.icon} + '@4x.png'}"
                              alt="Weather icon">
                         <div class="card-body d-flex flex-column">
                             <h1 class="card-text"><span th:text="${#numbers.formatDecimal(loc.temp, 1, 0)}">7°C</span>°C</h1>

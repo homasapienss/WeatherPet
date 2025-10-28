@@ -44,6 +44,7 @@ public class WeatherResponse {
     @Setter
     public static class Condition {
         private String description;
+        private String icon;
     }
 }
 
