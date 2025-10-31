@@ -25,10 +25,9 @@ public class LocationService {
     }
 
     @Transactional
-    public void addLocation (LocationDTO locationDTO, String login) {
-        User userByLogin = userService.getUserByLogin(login);
+    public void addLocation (LocationDTO locationDTO, User user) {
         Location location = locationMapper.toLocation(locationDTO);
-        location.setUser(userByLogin);
+        location.setUser(user);
         locationRepository.saveOrUpdate(location);
     }
 

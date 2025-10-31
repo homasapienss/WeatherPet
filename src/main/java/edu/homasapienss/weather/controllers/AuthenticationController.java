@@ -24,18 +24,12 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String signIn(HttpServletRequest req, HttpServletResponse resp) {
-        if (authorizeService.isUserAuthorized(req, resp)) {
-            return "redirect:/";
-        }
-        return "login";
+        return authorizeService.isUserAuthorized(req, resp) ? "redirect:/" : "login";
     }
 
     @GetMapping("/register")
     public String signUp(HttpServletRequest req, HttpServletResponse resp) {
-        if (authorizeService.isUserAuthorized(req, resp)) {
-            return "redirect:/";
-        }
-        return "register";
+        return authorizeService.isUserAuthorized(req, resp) ? "redirect:/" : "register";
     }
 
     @PostMapping("/login")

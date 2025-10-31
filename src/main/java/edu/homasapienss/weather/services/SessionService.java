@@ -35,7 +35,10 @@ public class SessionService {
     public boolean isSessionValid(HttpServletRequest req, HttpServletResponse resp) {
         Session session = takeSessionFromRequest(req);
 
-        if (session == null) return false;
+        if (session == null) {
+            deleteCookie(resp);
+            return false;
+        }
         if (isSessionExpired(session)) {
             deleteSession(session);
             deleteCookie(resp);

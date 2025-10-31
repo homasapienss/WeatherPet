@@ -31,6 +31,7 @@ public class AuthorizeService {
         sessionService.addCookie(resp, uuidOfCreatedSession);
     }
 
+    @Transactional
     public User findUserOrThrow (String login, String password) {
         User user = userRepository.getByLogin(login).orElseThrow(BadCredentialsException::new);
         if (!passwordEncoder.matches(password, user.getPassword())) {

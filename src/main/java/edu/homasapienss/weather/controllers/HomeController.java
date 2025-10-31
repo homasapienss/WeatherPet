@@ -45,18 +45,15 @@ public class HomeController {
     }
 
     @PostMapping("/delete-location")
-    public String deleteLocation(@RequestAttribute("user") User user,
-                                 @RequestParam("id") Long id,
-                                 Model model) {
-        model.addAttribute("user", user);
+    public String deleteLocation(@RequestParam("id") Long id) {
         locationService.deleteLocationById(id);
         return "redirect:/";
     }
 
     @PostMapping("/add-location")
     public String addLocation(@ModelAttribute LocationDTO locationDTO,
-                              @RequestParam("login") String login) {
-        locationService.addLocation(locationDTO, login);
+                              @RequestAttribute User user) {
+        locationService.addLocation(locationDTO, user);
         return "redirect:/";
     }
 
