@@ -52,7 +52,7 @@ public class HomeController {
 
     @PostMapping("/add-location")
     public String addLocation(@ModelAttribute LocationDTO locationDTO,
-                              @RequestAttribute User user) {
+                              @RequestAttribute("user") User user) {
         locationService.addLocation(locationDTO, user);
         return "redirect:/";
     }

@@ -5,8 +5,11 @@ import edu.homasapienss.weather.services.AuthenticationService;
 import edu.homasapienss.weather.services.AuthorizeService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -23,23 +26,35 @@ public class AuthenticationController {
     }
 
     @GetMapping("/login")
-    public String signIn(HttpServletRequest req, HttpServletResponse resp) {
+    public String signIn(Model model, HttpServletRequest req, HttpServletResponse resp) {
+        model.addAttribute("userDto", new UserDto("", ""));
         return authorizeService.isUserAuthorized(req, resp) ? "redirect:/" : "login";
     }
 
     @GetMapping("/register")
-    public String signUp(HttpServletRequest req, HttpServletResponse resp) {
+    public String signUp(Model model, HttpServletRequest req, HttpServletResponse resp) {
+        model.addAttribute("userDto", new UserDto("", ""));
         return authorizeService.isUserAuthorized(req, resp) ? "redirect:/" : "register";
     }
 
     @PostMapping("/login")
-    public String signIn(@ModelAttribute UserDto userDto, HttpServletResponse resp) {
+    public String signIn(@Valid @ModelAttribute UserDto userDto,
+                         BindingResult bindingResult,
+                         HttpServletResponse resp
+                         ) {
+        if (bindingResult.hasErrors()) {
+            return "login";
+        }
         authorizeService.loginUser(userDto, resp);
         return "redirect:/";
     }
 
     @PostMapping("/register")
-    public String signUp(@ModelAttribute UserDto userDto) {
+    public String signUp(@Valid @ModelAttribute UserDto userDto,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "register";
+        }
         authService.registrationUser(userDto);
         return "redirect:/auth/login";
     }

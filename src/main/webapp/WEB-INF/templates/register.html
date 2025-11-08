@@ -18,33 +18,32 @@
 
     <div class="row justify-content-center">
         <div class="col-12 col-lg-4 col-md-6 col-sm-12">
-            <form th:action="@{/auth/register}" method="post" class="mt-4">
+            <form th:action="@{/auth/register}" th:object="${userDto}" method="post" class="mt-4">
+
+                <!-- LOGIN -->
                 <div class="mb-3">
                     <label for="login" class="form-label">Username</label>
                     <input type="text"
+                           th:field="*{login}"
                            class="form-control"
-                           th:classappend="${usernameError} ? ' is-invalid' : ''"
+                           th:classappend="${#fields.hasErrors('login')} ? 'is-invalid' : ''"
                            id="login"
-                           name="login"
-                           th:value="${username}"
-                           required />
-                        <div class="invalid-feedback">
-                            Account with this email already exists.
-                        </div>
+                           placeholder="Enter your username"/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('login')}"
+                         th:errors="*{login}"></div>
                 </div>
+
+                <!-- PASSWORD -->
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <div class="input-group has-validation">
-                        <input type="password"
-                               class="form-control"
-                               th:classappend="${passwordError} ? ' is-invalid' : ''"
-                               id="password"
-                               name="password"
-                               required />
-                        <div class="invalid-feedback">
-                            Password must be at least 4 characters long.
-                        </div>
-                    </div>
+                    <input type="password"
+                           th:field="*{password}"
+                           class="form-control"
+                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                           id="password"
+                           placeholder="Enter your password"/>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}"
+                         th:errors="*{password}"></div>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100 mt-3">Sign Up</button>

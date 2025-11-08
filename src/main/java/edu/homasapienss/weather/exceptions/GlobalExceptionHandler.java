@@ -8,6 +8,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final String ERROR_ATTRIBUTE = "error_message";
+
+    @ExceptionHandler(Exception.class)
+    public String handleGeneralError(Exception ex, Model model) {
+        addErrorToPage(ex, model);
+        return "error";
+    }
+
     @ExceptionHandler(LoginException.class)
     public String handleLoginError(LoginException ex, Model model) {
         addErrorToPage(ex, model);
@@ -21,6 +30,6 @@ public class GlobalExceptionHandler {
     }
 
     private void addErrorToPage (Exception ex, Model model) {
-        model.addAttribute("error_message", ex.getMessage());
+        model.addAttribute(ERROR_ATTRIBUTE, ex.getMessage());
     }
 }
