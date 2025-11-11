@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+    //можно наверное еще в application.properties вывести
     private static final String ERROR_ATTRIBUTE = "error_message";
 
     @ExceptionHandler(Exception.class)

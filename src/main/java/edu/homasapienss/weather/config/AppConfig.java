@@ -97,16 +97,16 @@ public class AppConfig {
     }
 
     @Bean
-    public RestClient geoRestClient() {
+    public RestClient geoRestClient(@Value("${open.weather.api.geo}") String url) {
         return RestClient.builder()
-                .baseUrl("https://api.openweathermap.org/geo/1.0")
+                .baseUrl(url)
                 .build();
     }
 
     @Bean
-    public RestClient weatherRestClient() {
+    public RestClient weatherRestClient(@Value("${open.weather.api}") String url) {
         return RestClient.builder()
-                .baseUrl("https://api.openweathermap.org/data/2.5")
+                .baseUrl(url)
                 .build();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.client.RestClient;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -59,5 +60,19 @@ public class TestConfig {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
         return txManager;
+    }
+
+    @Bean
+    public RestClient geoRestClient(@Value("${open.weather.api.geo}") String url) {
+        return RestClient.builder()
+                .baseUrl(url)
+                .build();
+    }
+
+    @Bean
+    public RestClient weatherRestClient(@Value("${open.weather.api}") String url) {
+        return RestClient.builder()
+                .baseUrl(url)
+                .build();
     }
 }
